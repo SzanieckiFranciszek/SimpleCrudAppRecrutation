@@ -14,7 +14,7 @@ public class UserRepository {
     private String GET_USER_BY_ID_QUERY = "select * from user where id=?";
     private String REMOVE_USER_BY_ID_QUERY = "delete from user where id=?";
     private String ADD_USER_BY_ID_QUERY = "insert into user(name,surname) values(?,?)";
-    private String UPDATE_USER_DATA_BY_ID_QUERY = "update user set name=2, surname=? where id=?";
+    private String UPDATE_USER_DATA_BY_ID_QUERY = "update user set name=?, surname=? where id=?";
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -31,10 +31,11 @@ public class UserRepository {
         jdbcTemplate.update(REMOVE_USER_BY_ID_QUERY, id);
     }
 
-    public void addNewUsers(List<User>users){
-        users.forEach(user -> jdbcTemplate.update(ADD_USER_BY_ID_QUERY,user.getName(),user.getSurname()));
+    public void addNewUsers(List<User> users) {
+        users.forEach(user -> jdbcTemplate.update(ADD_USER_BY_ID_QUERY, user.getName(), user.getSurname()));
     }
-    public void updateUserById(User user){
-        jdbcTemplate.update(UPDATE_USER_DATA_BY_ID_QUERY,user.getName(),user.getSurname(),user.getId());
+
+    public void updateUserById(int id, User user) {
+        jdbcTemplate.update(UPDATE_USER_DATA_BY_ID_QUERY, user.getName(), user.getSurname(),id);
     }
 }
